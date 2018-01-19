@@ -20,14 +20,18 @@ var spawner = {
         var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
 	    var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader')
 	    
-	    if (harvesters.length < 3 ){
+	    if (harvesters.length < 4 ){
 	    	makeSpawn(spawn, 'harvester');
 	    }
-	    else if (builders.length < 15 ){
+	    else if (builders.length < 12 ){
 	    	makeSpawn(spawn, 'builder');
 	    }
 	    else if (upgraders.length < 3){
 			makeSpawn(spawn, 'upgrader');
+	    }
+	    else if(spawn.energyCapacity - spawn.energy < 50)
+	    {
+	    	makeSpawn(spawn, 'builder');
 	    }
 	}
 }
