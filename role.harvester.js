@@ -2,8 +2,28 @@ var roleHarvester = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+        targets = creep.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return structure.structureType == STRUCTURE_CONTAINER && structure.store[RESOURCE_ENERGY] > 50 ;}
+            });
+
+        var closestSource = creep.pos.findClosestByRange(FIND_SOURCES);
+
         if(creep.carry.energy < creep.carryCapacity) {
-            if(creep.harvest(creep.pos.findClosestByRange(FIND_SOURCES)) == ERR_NOT_IN_RANGE) {
+            var target = null; 
+            if (targets[0]!=undefined) {
+                target  = targets[0];
+                
+            }else {
+                target  = targets;
+            }
+
+            if (target.pos != undefined ) {
+                if (creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target.pos);
+                }
+            }
+            else if(creep.harvest(closestSource) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(creep.pos.findClosestByRange(FIND_SOURCES), {visualizePathStyle: {stroke: '#ffaa00'}});
             }
         }

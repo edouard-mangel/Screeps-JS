@@ -18,10 +18,7 @@ var spawner = {
 	    var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader')
 
 	    
-	    if (miners.length < 2 ){
-	    	makeSpawn(spawn, 'miner');
-	    }
-		else if (harvesters.length < 4 ){
+		if (harvesters.length < 4 ){
 	    	makeSpawn(spawn, 'harvester');
 	    }
 	    else if (builders.length < 5 && _.filter(Game.constructionSites).length > 0){
@@ -29,6 +26,9 @@ var spawner = {
 	    }
 	    else if (upgraders.length < 5){
 			makeSpawn(spawn, 'upgrader');
+	    }
+	    else if (miners.length < 1 ){
+	    	makeSpawn(spawn, 'miner');
 	    }
 	    else {
 	    	makeSpawn(spawn, 'upgrader');
